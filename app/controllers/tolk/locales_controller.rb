@@ -6,13 +6,13 @@ module Tolk
     def index
       @locales = Tolk::Locale.secondary_locales.sort_by(&:language_name)
     end
-  
+
     def show
       respond_to do |format|
         format.html do
           @phrases = @locale.phrases_without_translation(params[:page])
         end
-        format.atom { @phrases = @locale.phrases_without_translation(params[:page], :per_page => 50) }
+        format.atom { @phrases = @locale.phrases_without_translation.page(params[:page]) }
         format.yaml { render :text => @locale.to_hash.ya2yaml(:syck_compatible => true) }
       end
     end

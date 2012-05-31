@@ -26,31 +26,6 @@ class LocaleTest < ActiveSupport::TestCase
     assert !tolk_locales(:en).search_phrases_without_translation("cozy").include?(tolk_phrases(:hello_world))
   end
 
-  test "paginating phrases without translations" do
-    Tolk::Phrase.per_page = 2
-    locale = tolk_locales(:se)
-
-    page1 = locale.phrases_without_translation
-    assert_equal [4, 3], page1.map(&:id)
-
-    page2 = locale.phrases_without_translation(2)
-    assert_equal [2, 5], page2.map(&:id)
-
-    page3 = locale.phrases_without_translation(3)
-    assert page3.blank?
-  end
-
-  test "paginating phrases with translations" do
-    Tolk::Phrase.per_page = 4
-    locale = tolk_locales(:en)
-
-    page1 = locale.phrases_with_translation
-    assert_equal [1, 3, 2, 5], page1.map(&:id)
-
-    page2 = locale.phrases_with_translation(2)
-    assert page2.blank?
-  end
-
   test "counting missing translations" do
     assert_equal 2, tolk_locales(:da).count_phrases_without_translation
     assert_equal 4, tolk_locales(:se).count_phrases_without_translation
@@ -81,5 +56,5 @@ class LocaleTest < ActiveSupport::TestCase
     assert_equal 'English', tolk_locales(:en).language_name
     assert_equal 'pirate', Tolk::Locale.new(:name => 'pirate').language_name
   end
-  
+
 end

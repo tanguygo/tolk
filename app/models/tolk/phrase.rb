@@ -6,8 +6,7 @@ module Tolk
 
     validates_uniqueness_of :key
 
-    cattr_accessor :per_page
-    self.per_page = 30
+    paginates_per 30
 
     has_many :translations, :class_name => 'Tolk::Translation', :dependent => :destroy do
       def primary

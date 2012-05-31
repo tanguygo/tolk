@@ -44,9 +44,7 @@
         <p><%= locale_form.submit "Save changes" %></p>
       </div>
     <% end %>
-    <div class="paginate">
-      <%= will_paginate @phrases %>
-    </div>
+    <%= paginate @phrases %>
   <% else %>
     <p style="text-align: left">There aren't any missing or updated phrases that need translation.</p>
     <p>&nbsp;</p>
