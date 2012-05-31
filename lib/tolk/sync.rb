@@ -7,6 +7,9 @@ module Tolk
     module ClassMethods
       def sync!
         sync_phrases(load_translations)
+        # Destroy faker key
+        Tolk::Phrase.where("key LIKE '%faker%'").destroy_all
+        Tolk::Phrase.where("key LIKE '%ckeditor%'").destroy_all
       end
 
       def load_translations

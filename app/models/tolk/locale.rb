@@ -9,7 +9,7 @@ module Tolk
       @dump_path ||= Tolk.config.dump_path.is_a?(Proc) ? instance_eval(&Tolk.config.dump_path) : Tolk.config.dump_path
     end
 
-    has_many :phrases, :through => :translations, :class_name => 'Tolk::Phrase'
+    has_many :phrases, :through => :translations, :class_name => 'Tolk::Phrase', :dependent => :destroy
     has_many :translations, :class_name => 'Tolk::Translation', :dependent => :destroy
 
     accepts_nested_attributes_for :translations, :reject_if => proc { |attributes| attributes['text'].blank? }
@@ -179,7 +179,7 @@ module Tolk
         end
       end
     end
-    
+
     private
 
 
