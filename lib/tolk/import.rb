@@ -21,9 +21,10 @@ module Tolk
           phrase = phrases.detect {|p| p.key == key}
 
           if phrase
-            old_translation = locale.translations.where(:phrase => phrase).first
+            old_translation = locale.translations.where(:phrase_id => phrase.id).first
             if old_translation && old_translation.text != value
-              old_translation.update_attributes(:text => value)
+              puts value.inspect
+              puts old_translation.inspect
               count_updated = count_updated + 1
             else
               translation = locale.translations.new(:text => value, :phrase => phrase)
