@@ -40,7 +40,7 @@ module Tolk
       private
 
       def sync_phrases(translations)
-        primary_locale = self.primary_locale
+        primary_locale    = self.primary_locale
         secondary_locales = self.secondary_locales
 
         # Handle deleted phrases
