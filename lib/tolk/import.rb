@@ -25,6 +25,7 @@ module Tolk
             if old_translation && old_translation.text != value
               puts value.inspect
               puts old_translation.inspect
+              old_translation.update_attributes(:text => value)
               count_updated = count_updated + 1
             else
               translation = locale.translations.new(:text => value, :phrase => phrase)
