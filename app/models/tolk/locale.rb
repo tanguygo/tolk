@@ -60,6 +60,21 @@ module Tolk
         end
       end
 
+      def remove_trailing_whitespaces(to = self.locales_config_path)
+        secondary_locales.each do |locale|
+          path      = "#{to}/#{locale.name}.yml"
+          temp_file = Tempfile.new('tmp.yml')
+          write_stripped_lines_from_file_to_tempfile(path, temp_file)
+          FileUtils.mv(temp_file.path, path)
+        end
+      end
+
+      def write_stripped_lines_from_file_to_tempfile(file_path, temp_file)
+        File.open(file_path, "r").each_line do |line|
+          temp_file.puts line.rstrip
+        end
+      end
+
       def special_key_or_prefix?(prefix, key)
         self.special_prefixes.include?(prefix) || self.special_keys.include?(key)
       end
