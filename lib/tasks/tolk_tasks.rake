@@ -24,6 +24,17 @@ namespace :tolk do
     Tolk::Locale.dump_all
   end
 
+  desc "Removes trailing whitespaces from locale files"
+  task :clean_dump => :environment do
+    Tolk::Locale.remove_trailing_whitespaces
+  end
+
+  desc "Generate yml files for all the locales defined in Tolk and remove trailing whitespaces from files"
+  task :clean_dump_all => :environment do
+    Rake::Task['tolk:dump_all'].invoke
+    Rake::Task['tolk:clean_dump'].invoke
+  end
+
   desc "Imports data all non default locale yml files to Tolk"
   task :import => :environment do
     Rake::Task['tolk:sync'].invoke
