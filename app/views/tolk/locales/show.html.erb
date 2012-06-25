@@ -24,6 +24,10 @@
           <tr>
             <% translation = Tolk::Translation.new(:locale => @locale, :phrase => phrase) %>
             <td class="translation">
+              Coucou
+              <% phrase.errors.full_messages.each do |error| %>
+                <%= error %>
+              <% end %>
               <%= hidden_field_tag :"translations[][id]", translation.id, :id => "#{translation.object_id}_id" %>
               <%= hidden_field_tag :"translations[][phrase_id]", phrase.id, :id => "#{translation.object_id}_phrase_id" %>
               <%= hidden_field_tag :"translations[][locale_id]", translation.locale_id, :id => "#{translation.object_id}_locale_id" %>

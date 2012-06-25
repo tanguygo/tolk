@@ -83,11 +83,13 @@ module Tolk
     end
 
     def fix_text_type
+      puts primary_translation.text.class
       if primary_translation.present? && !primary_translation.text.is_a?(FalseClass) && !primary_translation.text.is_a?(TrueClass)
         if self.text.is_a?(String) && !primary_translation.text.is_a?(String)
           self.text = begin
             YAML.load(self.text.strip)
           rescue ArgumentError
+            puts "ERROR"
             nil
           end
         end
