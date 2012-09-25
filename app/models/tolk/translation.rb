@@ -2,7 +2,9 @@ module Tolk
   class Translation < ActiveRecord::Base
     self.table_name = "tolk_translations"
 
-    scope :containing_text, lambda {|query| where("tolk_translations.text LIKE ?", "%#{query}%") }
+    def self.containing_text(query)
+      self.where(Tolk::Translation.arel_table[:text].matches("%#{query}%"))
+    end
 
     serialize :text
     validates_presence_of :text, :if => proc {|r| r.primary.blank? && !r.explicit_nil }
