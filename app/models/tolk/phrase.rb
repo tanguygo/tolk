@@ -20,8 +20,8 @@ module Tolk
 
     attr_accessor :translation
 
-    scope :containing_text, lambda { |query|
-      { :conditions => ["tolk_phrases.key ILIKE ?", "%#{query}%"] }
-    }
+    def self.containing_text(query)
+      self.where(Tolk::Phrase.arel_table[:key].matches("%#{query}%"))
+    end
   end
 end
