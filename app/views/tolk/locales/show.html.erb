@@ -24,7 +24,6 @@
           <tr>
             <% translation = Tolk::Translation.new(:locale => @locale, :phrase => phrase) %>
             <td class="translation">
-              Coucou
               <% phrase.errors.full_messages.each do |error| %>
                 <%= error %>
               <% end %>

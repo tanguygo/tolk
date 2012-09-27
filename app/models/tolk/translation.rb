@@ -21,11 +21,12 @@ module Tolk
 
     before_save :set_previous_text
 
+    attr_accessor :explicit_nil
+    before_validation :set_explicit_nil
+
     attr_accessor :primary
     before_validation :fix_text_type, :unless => proc {|r| r.primary }
 
-    attr_accessor :explicit_nil
-    before_validation :set_explicit_nil
 
     def up_to_date?
       not out_of_date?
@@ -76,6 +77,9 @@ module Tolk
     private
 
     def set_explicit_nil
+      puts "set_explicit_nil"
+      puts self.text
+      puts self.text.class
       if self.text == '~'
         self.text = nil
         self.explicit_nil = true
@@ -84,6 +88,7 @@ module Tolk
 
     def fix_text_type
       puts primary_translation.text.class
+      puts "#{primary_translation.present?} && #{!primary_translation.text.is_a?(FalseClass)} && #{!primary_translation.text.is_a?(TrueClass)}"
       if primary_translation.present? && !primary_translation.text.is_a?(FalseClass) && !primary_translation.text.is_a?(TrueClass)
         if self.text.is_a?(String) && !primary_translation.text.is_a?(String)
           self.text = begin
